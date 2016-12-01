@@ -14,6 +14,7 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 
+import groovy.transform.TypeChecked
 import hr.neos.jvmlang.java.Country;
 import hr.neos.jvmlang.java.Employee;
 import hr.neos.jvmlang.java.EmployeeServiceJLocal;
@@ -22,7 +23,8 @@ import hr.neos.jvmlang.java.EmployeeServiceJLocal;
 //@javax.faces.bean.ViewScoped
 @Named
 @ViewScoped
-public class MultiCultiSelectView implements Serializable {
+@TypeChecked
+public class MultiCultiSelectViewG implements Serializable, GroovyObject {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -35,13 +37,14 @@ public class MultiCultiSelectView implements Serializable {
 	private Set<Country> allCountries;
 	String countriesString="";
 
+	
 	/**
 	 * 
 	 */
 	@PostConstruct
 	public void init() {
 		try {
-			System.out.println(this.getClass() + " init()");
+			System.out.println(this.class.name + " init()");
 			employees = new ArrayList<>();
 			List<Employee> allEmps = employeeServiceJ.getAllHavingDepartments();
 			selectableEmployees = allEmps;
@@ -60,7 +63,7 @@ public class MultiCultiSelectView implements Serializable {
 	 */
 	@PreDestroy
 	public void destroy() {
-		System.out.println(this.getClass() + " destroy()");
+		System.out.println(this.class.name + " destroy()");
 	}
 
 	public List<Employee> getSelectableEmployees() {
@@ -80,6 +83,7 @@ public class MultiCultiSelectView implements Serializable {
 			countryNames.add(c.getCountryName());
 		}
 		countriesString = String.join(", ", countryNames);
+		System.out.println("countriesString: " + countriesString);
 	}
 	
 	public void setSelectableEmployees(List<Employee> selectableEmployees) {
