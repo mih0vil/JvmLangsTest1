@@ -83,7 +83,6 @@ public class MultiCultiSelectViewG implements Serializable, GroovyObject {
 			countryNames.add(c.getCountryName());
 		}
 		countriesString = String.join(", ", countryNames);
-		System.out.println("countriesString: " + countriesString);
 	}
 	
 	public void setSelectableEmployees(List<Employee> selectableEmployees) {
