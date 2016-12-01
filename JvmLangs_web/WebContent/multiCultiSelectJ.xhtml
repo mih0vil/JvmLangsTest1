@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	>
+
+<!-- 
+<ui:composition template="">
+	<ui:define name="header">
+	    Add your header here or delete to use the default
+	</ui:define>
+	<ui:define name="content">
+	    Add your content here or delete to use the default
+	</ui:define>
+	<ui:define name="footer">
+	    Add your footer here or delete to use the default
+	</ui:define>
+</ui:composition>
+ -->
+
+<h:head>
+	<title>MultiCultural Selection</title>
+</h:head>
+ 
+<h:body>
+	<h1>MultiCultural Selection</h1>
+	<h:form id="form">
+	
+		<p:growl id="msgs" showDetail="true" />
+		
+		You need to select employees from all of the different countries.
+		<p/>
+		Here is a list of the remaining countries to select from: <br/>		
+		<h:outputText 
+			value="#{multiCultiSelectView.countriesString}"
+			id="remaining-countries" style="font-weight: bold;"/>
+		<p/>
+		
+		<p:dataTable var="emp" value="#{multiCultiSelectView.selectableEmployees}"
+			rows="10" paginator="true" rowsPerPageTemplate="5,10,20" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			>
+		    <p:column headerText="First name" >
+        		<h:outputText value="#{emp.firstName}" />
+    		</p:column>
+		    <p:column headerText="Last name">
+        		<h:outputText value="#{emp.lastName}" />
+    		</p:column>
+    		<!-- 
+		    <p:column headerText="Department" filterBy="#{emp.department.departmentName}" filterMatchMode="contains">
+        		<h:outputText value="#{emp.department.departmentName}" />
+    		</p:column>
+    		 -->
+		    <p:column headerText="Country" filterBy="#{emp.department.location.country.countryName}" filterMatchMode="contains">
+        		<h:outputText value="#{emp.department.location.country.countryName}" />
+    		</p:column>
+    		<p:column headerText="">
+    			<p:commandButton value="Select employee" actionListener="#{multiCultiSelectView.selectEmployee(emp)}"
+    			 	update="@form"/>
+    		</p:column>
+		</p:dataTable>
+		
+		<h2>Project members </h2>
+	    <p:dataList value="#{multiCultiSelectView.employees}" var="emp" type="ordered">
+	        <f:facet name="header">
+	            Selected employees
+	        </f:facet>
+	        #{emp.firstName} #{emp.lastName} (#{emp.department.location.country.countryName})
+	    </p:dataList>
+	    <p:commandButton value="Clear list of selected employees" 
+	    	actionListener="#{multiCultiSelectView.clearEmployees()}" update="@form"/>
+	</h:form>
+</h:body>
+</html>
