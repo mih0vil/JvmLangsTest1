@@ -24,7 +24,7 @@ import hr.neos.jvmlang.java.EmployeeServiceJLocal;
 @Named
 @ViewScoped
 @TypeChecked
-public class MultiCultiSelectViewG implements Serializable, GroovyObject {
+public class MultiCultiSelectViewG implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
