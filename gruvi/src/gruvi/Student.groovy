@@ -37,12 +37,11 @@ class Student {
 			new Student('Greta', 'Zagreb'), 
 			]
 		
-		println(list.findAll {it.isFrom('Zagreb')}.size() )
-		
-		list.findAll { it.isFrom('Zagreb') }.size()
+		println('Number of students from Zagreb: ' + list.findAll {it.isFrom('Zagreb')}.size() )
 		
 		println "A beautiful list: ${list}" //parantheses are not needed but are handy in Eclipse for autocomplete
-		println "Whole list has ${list.size()} elements" //power of string templates		
+		println "Whole list has ${list.size()} elements" //power of string templates
+		println "All names are ${ list*.name }"  //spread operator, apply it on each element		
 		
 		def student = new Student('Thor', null)
 		Student lino = null
@@ -52,7 +51,10 @@ class Student {
 		assert student //true if not null, not empty, not zero
 		assert !lino 
 		
-		println "I am avoiding null checks even in the template for student ${lino ?: 'lino'}"
+		println "I am avoiding null checks even in the template for student ${lino ?: 'lino'} because null is like false"
+		Student splitStudent = list.find({ it.isFrom('Split') })
+		println "A student from Split is named ${splitStudent?.name}"  //if object is null, return null, otherwise call method/property
+		println "A student from Zagreb is named ${ list.find({ it.isFrom('Zagreb') }) ?.name}" 
 		
 		switch (student) {
 			case new Student('Thor', null): 
@@ -64,8 +66,25 @@ Greet him!
 			case null: println 'No one important'; break
 		}
 		
+		Student last = list[-1] //negative index counts from the end
+		println "Last student is ${last}"
+		last.city = 'Hum' //setter for city was redefined
+		println "City was changed to '${last.city}'"
+		
+		def map = [tool: 'spoon', food: 'pancakes']
+		println "map ${map} is of ${map.getClass()}"
+		
+		println "Generating some data with range and mapping function: ${ (1..3).collect {it*2} }"
+		
+		def mult = { int a, int b -> a + b }		
+		def add3 = mult.curry(3) //currying
+		def mult2 = { int n -> n * 2}
+		def mult2AndAdd3 = add3 << mult2
+		assert mult2AndAdd3(2) == 2*2+3 //function composition
 	}
+	
 
+	//Eclipse can generate hash code and equals
 	@Override
 	public int hashCode() {
 		final int prime = 31;
