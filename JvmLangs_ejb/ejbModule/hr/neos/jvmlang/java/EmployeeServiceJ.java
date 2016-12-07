@@ -27,5 +27,11 @@ public class EmployeeServiceJ implements EmployeeServiceJLocal {
     public List<Employee> getAllHavingDepartments() {
     	return em.createNamedQuery("Employee.getAllHavingDepartments", Employee.class).getResultList();
     }
+    
+    @Override
+    public List<Employee> getAll() {
+    	return em.createNamedQuery("Employee.findAll", Employee.class).getResultList();
+    }
+    
 
 }

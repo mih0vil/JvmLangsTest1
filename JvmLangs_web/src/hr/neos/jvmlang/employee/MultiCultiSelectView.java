@@ -30,7 +30,7 @@ public class MultiCultiSelectView implements Serializable {
 	private EmployeeServiceJLocal employeeServiceJ;
 	
 	private List<Employee> selectableEmployees;
-	private List<Employee> employees;
+	private List<Employee> chosenEmployees;
 	private Set<Country> countries;
 	private Set<Country> allCountries;
 	String countriesString="";
@@ -42,7 +42,7 @@ public class MultiCultiSelectView implements Serializable {
 	public void init() {
 		try {
 			System.out.println(this.getClass() + " init()");
-			employees = new ArrayList<>();
+			chosenEmployees = new ArrayList<>();
 			List<Employee> allEmps = employeeServiceJ.getAllHavingDepartments();
 			selectableEmployees = allEmps;
 			allCountries = new HashSet<>();
@@ -68,11 +68,11 @@ public class MultiCultiSelectView implements Serializable {
 	}
 
 	/**
-	 * Refresh list of countries after change in selection of employees
+	 * Refresh list of countries after change in selection of chosenEmployees
 	 */
 	private void refreshCountries() {
 		countries = new HashSet<>(allCountries);
-		for (Employee e : employees) {
+		for (Employee e : chosenEmployees) {
 			countries.remove(e.getDepartment().getLocation().getCountry());
 		}
 		List<String> countryNames = new ArrayList<>(countries.size());
@@ -94,12 +94,12 @@ public class MultiCultiSelectView implements Serializable {
 		this.countries = countries;
 	}
 
-	public List<Employee> getEmployees() {
-		return employees;
+	public List<Employee> getChosenEmployees() {
+		return chosenEmployees;
 	}
 	
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
+	public void setChosenEmployees(List<Employee> employees) {
+		this.chosenEmployees = employees;
 	}
 
 	public String getCountriesString() {
@@ -116,7 +116,7 @@ public class MultiCultiSelectView implements Serializable {
 	 */
 	public void selectEmployee(Employee employee) {
 		try {
-			employees.add(employee);
+			chosenEmployees.add(employee);
 			selectableEmployees.remove(employee);
 			refreshCountries();
 		} catch (Exception e2) {
@@ -125,11 +125,11 @@ public class MultiCultiSelectView implements Serializable {
 	}
 	
 	/**
-	 * Clears list of selected employees
+	 * Clears list of selected chosenEmployees
 	 */
 	public void clearEmployees() {
-		selectableEmployees.addAll(employees);
-		employees = new ArrayList<>();
+		selectableEmployees.addAll(chosenEmployees);
+		chosenEmployees = new ArrayList<>();
 		refreshCountries();
 	}
 	

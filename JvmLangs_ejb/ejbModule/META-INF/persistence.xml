@@ -4,7 +4,6 @@
 		<jta-data-source>jdbc/hrDS</jta-data-source>
 		<class>hr.neos.jvmlang.java.Country</class>
 		<class>hr.neos.jvmlang.java.Department</class>
-		<class>hr.neos.jvmlang.java.Employee</class>
 		<class>hr.neos.jvmlang.java.Location</class>
 	</persistence-unit>
 </persistence>

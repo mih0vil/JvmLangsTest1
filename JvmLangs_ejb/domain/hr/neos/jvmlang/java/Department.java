@@ -87,14 +87,6 @@ public class Department implements Serializable {
 		this.departmentName = departmentName;
 	}
 
-	public Employee getEmployee() {
-		return this.employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
 	public Location getLocation() {
 		return this.location;
 	}

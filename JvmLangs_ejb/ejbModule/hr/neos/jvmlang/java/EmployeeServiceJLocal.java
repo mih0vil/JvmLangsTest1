@@ -9,4 +9,6 @@ public interface EmployeeServiceJLocal {
 
 	List<Employee> getAllHavingDepartments();
 
+	List<Employee> getAll();
+
 }

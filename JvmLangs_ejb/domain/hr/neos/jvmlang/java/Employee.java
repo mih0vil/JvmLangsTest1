@@ -65,10 +65,6 @@ public class Employee implements Serializable {
 	private String vpnNumber;
 
 	//bi-directional many-to-one association to Department
-	@OneToMany(mappedBy="employee")
-	private List<Department> departments;
-
-	//bi-directional many-to-one association to Department
 	@ManyToOne
 	@JoinColumn(name="DEPARTMENT_ID")
 	private Department department;
@@ -228,28 +224,6 @@ public class Employee implements Serializable {
 
 	public void setVpnNumber(String vpnNumber) {
 		this.vpnNumber = vpnNumber;
-	}
-
-	public List<Department> getDepartments() {
-		return this.departments;
-	}
-
-	public void setDepartments(List<Department> departments) {
-		this.departments = departments;
-	}
-
-	public Department addDepartment(Department department) {
-		getDepartments().add(department);
-		department.setEmployee(this);
-
-		return department;
-	}
-
-	public Department removeDepartment(Department department) {
-		getDepartments().remove(department);
-		department.setEmployee(null);
-
-		return department;
 	}
 
 	public Department getDepartment() {

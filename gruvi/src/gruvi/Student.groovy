@@ -56,7 +56,7 @@ class Student {
 		println "A student from Split is named ${splitStudent?.name}"  //if object is null, return null, otherwise call method/property
 		println "A student from Zagreb is named ${ list.find({ it.isFrom('Zagreb') }) ?.name}" 
 		
-		switch (student) {
+		switch (student) { //powerful switch
 			case new Student('Thor', null): 
 				println '''
 It is Thor.

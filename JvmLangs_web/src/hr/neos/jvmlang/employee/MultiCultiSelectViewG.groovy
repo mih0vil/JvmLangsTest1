@@ -15,6 +15,8 @@ import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
 
 import groovy.transform.TypeChecked
+import hr.neos.jvmlang.groovy.EmployeeServiceG
+import hr.neos.jvmlang.groovy.EmployeeServiceGLocal
 import hr.neos.jvmlang.java.Country;
 import hr.neos.jvmlang.java.Employee;
 import hr.neos.jvmlang.java.EmployeeServiceJLocal;
@@ -26,16 +28,17 @@ import hr.neos.jvmlang.java.EmployeeServiceJLocal;
 @TypeChecked
 public class MultiCultiSelectViewG implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L
 
 	@EJB
-	private EmployeeServiceJLocal employeeServiceJ;
+	private EmployeeServiceGLocal employeeService
 	
-	private List<Employee> selectableEmployees;
-	private List<Employee> employees;
-	private Set<Country> countries;
-	private Set<Country> allCountries;
-	String countriesString="";
+	List<Employee> selectableEmployees
+	List<Employee> chosenEmployees
+	List<Employee> allEmployees
+	Set<Country> countries
+	Set<Country> allCountries
+	String countriesString=""
 
 	
 	/**
@@ -45,12 +48,12 @@ public class MultiCultiSelectViewG implements Serializable {
 	public void init() {
 		try {
 			System.out.println(this.class.name + " init()");
-			employees = new ArrayList<>();
-			List<Employee> allEmps = employeeServiceJ.getAllHavingDepartments();
+			chosenEmployees = new ArrayList<>();
+			List<Employee> allEmps = employeeService.getAllHavingDepartments();
 			selectableEmployees = allEmps;
 			allCountries = new HashSet<>();
 			for (Employee e : allEmps) {
-				allCountries.add(e.getDepartment().getLocation().getCountry());
+				allCountries.add(e.department.location.country);
 			}			
 			refreshCountries();
 		} catch (Exception e) {
@@ -66,51 +69,12 @@ public class MultiCultiSelectViewG implements Serializable {
 		System.out.println(this.class.name + " destroy()");
 	}
 
-	public List<Employee> getSelectableEmployees() {
-		return selectableEmployees;
-	}
-
 	/**
-	 * Refresh list of countries after change in selection of employees
+	 * Refresh list of countries after change in selection of chosenEmployees
 	 */
 	private void refreshCountries() {
-		countries = new HashSet<>(allCountries);
-		for (Employee e : employees) {
-			countries.remove(e.getDepartment().getLocation().getCountry());
-		}
-		List<String> countryNames = new ArrayList<>(countries.size());
-		for (Country c : countries) {
-			countryNames.add(c.getCountryName());
-		}
-		countriesString = String.join(", ", countryNames);
-	}
-	
-	public void setSelectableEmployees(List<Employee> selectableEmployees) {
-		this.selectableEmployees = selectableEmployees;
-	}
-
-	public Set<Country> getCountries() {
-		return countries;
-	}
-
-	public void setCountries(Set<Country> countries) {
-		this.countries = countries;
-	}
-
-	public List<Employee> getEmployees() {
-		return employees;
-	}
-	
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
-	}
-
-	public String getCountriesString() {
-		return countriesString;
-	}
-
-	public void setCountriesString(String countriesString) {
-		this.countriesString = countriesString;
+		countries = allCountries - chosenEmployees.collect({ it.department.location.country }).unique() 
+		countriesString = String.join(', ', countries*.countryName)
 	}
 	
 	/**
@@ -119,11 +83,11 @@ public class MultiCultiSelectViewG implements Serializable {
 	 */
 	public void selectEmployee(Employee employee) {
 		try {
-			employees.add(employee);
-			selectableEmployees.remove(employee);
-			refreshCountries();
+			chosenEmployees << employee
+			selectableEmployees.remove(employee)
+			refreshCountries()
 		} catch (Exception e2) {
-			System.err.println(e2);
+			System.err.println(e2)
 		}
 	}
 	
@@ -131,9 +95,9 @@ public class MultiCultiSelectViewG implements Serializable {
 	 * Clears list of selected employees
 	 */
 	public void clearEmployees() {
-		selectableEmployees.addAll(employees);
-		employees = new ArrayList<>();
-		refreshCountries();
+		selectableEmployees.addAll(chosenEmployees)
+		chosenEmployees = new ArrayList<>()
+		refreshCountries()
 	}
 	
 }
