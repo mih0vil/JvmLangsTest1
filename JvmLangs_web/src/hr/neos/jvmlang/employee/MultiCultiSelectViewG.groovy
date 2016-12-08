@@ -70,8 +70,8 @@ class MultiCultiSelectViewG implements Serializable {
 	 * Refresh list of countries after change in selection of chosenEmployees
 	 */
 	private void refreshCountries() {
-		countries = allCountries - chosenEmployees.collect({ it.department.location.country }).unique() 
-		countriesString = String.join(', ', countries*.countryName)
+		countries = allCountries - chosenEmployees.collect({ it.department.location.country }).unique()		
+		countriesString = countries*.countryName.join(', ')
 	}
 	
 	/**
