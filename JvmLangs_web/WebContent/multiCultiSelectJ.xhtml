@@ -74,6 +74,18 @@
 	    </p:dataList>
 	    <p:commandButton value="Clear list of selected employees" 
 	    	actionListener="#{multiCultiSelectView.clearEmployees()}" update="@form"/>
+
+    	<p/>
+    	<p/>
+		<h2>Project leader candidates</h2>
+		<p:dataTable var="emp" value="#{multiCultiSelectView.allEmployeesWithCountries}"
+			rows="20" paginator="true" rowsPerPageTemplate="5,10,20" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			>
+		    <p:column headerText="Name (country)" filterMatchMode="contains" filterBy="#{emp}">
+        		<h:outputText value="#{emp}" />
+    		</p:column>
+		</p:dataTable>		    	
+
 	</h:form>
 </h:body>
 </html>

@@ -26,7 +26,7 @@ import hr.neos.jvmlang.java.EmployeeServiceJLocal;
 @Named
 @ViewScoped
 @TypeChecked
-public class MultiCultiSelectViewG implements Serializable {
+class MultiCultiSelectViewG implements Serializable {
 	
 	private static final long serialVersionUID = 1L
 
@@ -35,27 +35,24 @@ public class MultiCultiSelectViewG implements Serializable {
 	
 	List<Employee> selectableEmployees
 	List<Employee> chosenEmployees
-	List<Employee> allEmployees
+	List<String> allEmployeesWithCountries
 	Set<Country> countries
 	Set<Country> allCountries
 	String countriesString=""
-
 	
 	/**
 	 * 
 	 */
 	@PostConstruct
-	public void init() {
+	void init() {
 		try {
-			System.out.println(this.class.name + " init()");
-			chosenEmployees = new ArrayList<>();
-			List<Employee> allEmps = employeeService.getAllHavingDepartments();
-			selectableEmployees = allEmps;
-			allCountries = new HashSet<>();
-			for (Employee e : allEmps) {
-				allCountries.add(e.department.location.country);
-			}			
-			refreshCountries();
+			System.out.println(this.class.name + " init()")
+			chosenEmployees = new ArrayList<>()
+			List<Employee> empsWithDepartments = employeeService.getAllHavingDepartments()
+			selectableEmployees = empsWithDepartments
+			allCountries = new HashSet<>(empsWithDepartments*.department*.location*.country)
+			refreshCountries()
+			initAllEmployees()
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -65,7 +62,7 @@ public class MultiCultiSelectViewG implements Serializable {
 	 * 
 	 */
 	@PreDestroy
-	public void destroy() {
+	void destroy() {
 		System.out.println(this.class.name + " destroy()");
 	}
 
@@ -81,7 +78,7 @@ public class MultiCultiSelectViewG implements Serializable {
 	 * Select employee from the table. Adds to list of selected and refreshes list of remaining countries 
 	 * @param e
 	 */
-	public void selectEmployee(Employee employee) {
+	void selectEmployee(Employee employee) {
 		try {
 			chosenEmployees << employee
 			selectableEmployees.remove(employee)
@@ -94,10 +91,23 @@ public class MultiCultiSelectViewG implements Serializable {
 	/**
 	 * Clears list of selected employees
 	 */
-	public void clearEmployees() {
+	void clearEmployees() {
 		selectableEmployees.addAll(chosenEmployees)
 		chosenEmployees = new ArrayList<>()
 		refreshCountries()
+	}
+	
+	/**
+	 * Gets all employees with departments and transform it to list
+	 */
+	private void initAllEmployees() {
+		def all = employeeService.getAll()
+		allEmployeesWithCountries = all.collect { 
+			def country = it?.department?.location?.country?.countryName
+			def display = country ? "${it.firstName} ${it.lastName} (${country})" 
+				: "${it.firstName} ${it.lastName}"
+			display.toString() 
+		}
 	}
 	
 }

@@ -27,13 +27,14 @@ public class MultiCultiSelectView implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private EmployeeServiceJLocal employeeServiceJ;
+	private EmployeeServiceJLocal employeeService;
 	
 	private List<Employee> selectableEmployees;
 	private List<Employee> chosenEmployees;
 	private Set<Country> countries;
 	private Set<Country> allCountries;
 	String countriesString="";
+	private List<String> allEmployeesWithCountries;
 
 	/**
 	 * 
@@ -43,13 +44,14 @@ public class MultiCultiSelectView implements Serializable {
 		try {
 			System.out.println(this.getClass() + " init()");
 			chosenEmployees = new ArrayList<>();
-			List<Employee> allEmps = employeeServiceJ.getAllHavingDepartments();
+			List<Employee> allEmps = employeeService.getAllHavingDepartments();
 			selectableEmployees = allEmps;
 			allCountries = new HashSet<>();
 			for (Employee e : allEmps) {
 				allCountries.add(e.getDepartment().getLocation().getCountry());
 			}			
 			refreshCountries();
+			initAllEmployees();
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -131,6 +133,32 @@ public class MultiCultiSelectView implements Serializable {
 		selectableEmployees.addAll(chosenEmployees);
 		chosenEmployees = new ArrayList<>();
 		refreshCountries();
+	}
+
+	public List<String> getAllEmployeesWithCountries() {
+		return allEmployeesWithCountries;
+	}
+
+	public void setAllEmployeesWithCountries(List<String> allEmployeesWithCountries) {
+		this.allEmployeesWithCountries = allEmployeesWithCountries;
+	}
+	
+	
+	/**
+	 * Gets all employees with departments and transform it to list
+	 */
+	private void initAllEmployees() {
+		List<Employee> all = employeeService.getAll();
+		allEmployeesWithCountries = new ArrayList<>(all.size());
+		for (Employee e : all) {
+			String country = e.getDepartment() != null && e.getDepartment().getLocation() != null 
+					&& e.getDepartment().getLocation().getCountry() != null 
+					? e.getDepartment().getLocation().getCountry().getCountryName() 
+					: null;
+			allEmployeesWithCountries.add( country != null && country.length() > 0
+					? String.format("%s %s (%s)", e.getFirstName(), e.getLastName(), country)
+					: String.format("%s %s", e.getFirstName(), e.getLastName()));
+		}
 	}
 	
 }
