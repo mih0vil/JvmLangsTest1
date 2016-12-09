@@ -14,6 +14,7 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 
+import groovy.transform.CompileStatic
 import groovy.transform.TypeChecked
 import hr.neos.jvmlang.groovy.EmployeeServiceG
 import hr.neos.jvmlang.groovy.EmployeeServiceGLocal
@@ -26,6 +27,7 @@ import hr.neos.jvmlang.java.EmployeeServiceJLocal;
 @Named
 @ViewScoped
 @TypeChecked
+//@CompileStatic
 class MultiCultiSelectViewG implements Serializable {
 	
 	private static final long serialVersionUID = 1L

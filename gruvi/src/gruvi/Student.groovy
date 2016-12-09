@@ -1,8 +1,9 @@
 package gruvi
 
+import groovy.json.*
 import groovy.transform.TypeChecked
 
-@TypeChecked
+//@TypeChecked
 class Student {
 	String name //groovy automatically creates getter and setter
 	String city 
@@ -27,6 +28,16 @@ class Student {
 	void setCity(String city) { //setter and getter are called when working with fields, they are like wrappers
 		this.city = 'City of ' + city
 	}
+	
+	static List<Student> generateList() {
+		return [
+			new Student('Miha', 'Zagreb'), 
+			new Student(name:'Ivo', city:'Zagreb'), //default constructor and then assigment of variables
+			new Student('Bepo', 'Zagreb'), 
+			new Student('Borko', 'Dubrovnik'), 
+			new Student('Greta', 'Zagreb'), 
+			]
+	} 
 
 	static void main(String... args) {
 		List<Student> list = [
@@ -81,8 +92,31 @@ Greet him!
 		def mult2 = { int n -> n * 2}
 		def mult2AndAdd3 = add3 << mult2
 		assert mult2AndAdd3(2) == 2*2+3 //function composition
+		
+		def jsonOut = JsonOutput.toJson(last)
+		
+		def ip = 'http://bot.whatismyipaddress.com/'.toURL().text
+		println "My ip is ${ip}"
+		def jsonIn = 'https://api.github.com/repos/mih0vil/JvmLangsTest1/branches'.toURL().text
+		println jsonIn
+		def branches = new JsonSlurper().parseText(jsonIn)
+		println "First branch has a name ${branches[0].name}"
+			
+		def (prvi, drugi) = list //list decomposition
+		(prvi, drugi) = [drugi, prvi]
+		
+		//Zrinkin primjer
+		def city = 'Split'
+		city = getSomeCity()
+		println "Students from some city: ${ list.findAll { it.isFrom(city) } }"
+		
+		
+//		assert prvi == list[0]
 	}
 	
+	public static String getSomeCity() {
+		return "Zagreb";
+	}
 
 	//Eclipse can generate hash code and equals
 	@Override
