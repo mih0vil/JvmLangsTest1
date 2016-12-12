@@ -73,7 +73,7 @@ class MultiCultiSelectViewG implements Serializable {
 	 */
 	private void refreshCountries() {
 		countries = allCountries - chosenEmployees.collect({ it.department.location.country }).unique()		
-		countriesString = countries*.countryName.join(', ')
+		countriesString = (countries*.countryName as Iterable).join ', '
 	}
 	
 	/**
@@ -83,7 +83,7 @@ class MultiCultiSelectViewG implements Serializable {
 	void selectEmployee(Employee employee) {
 		try {
 			chosenEmployees << employee
-			selectableEmployees.remove(employee)
+			selectableEmployees.remove employee
 			refreshCountries()
 		} catch (Exception e2) {
 			System.err.println(e2)
@@ -94,7 +94,7 @@ class MultiCultiSelectViewG implements Serializable {
 	 * Clears list of selected employees
 	 */
 	void clearEmployees() {
-		selectableEmployees.addAll(chosenEmployees)
+		selectableEmployees.addAll chosenEmployees
 		chosenEmployees = new ArrayList<>()
 		refreshCountries()
 	}
