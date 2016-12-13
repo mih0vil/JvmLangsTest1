@@ -105,7 +105,7 @@ Greet him!
 		def (prvi, drugi) = list //list decomposition
 		(prvi, drugi) = [drugi, prvi]
 		
-		//Zrinkin primjer
+		//Zrinkin primjer, lambda argument ne treba biti final
 		def city = 'Split'
 		city = getSomeCity()
 		println "Students from some city: ${ list.findAll { it.isFrom(city) } }"
