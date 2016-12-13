@@ -37,7 +37,7 @@ fun main(args: Array<String>) {
 	
 	//Kotlin compiler forces different null handling
 //	var student = Student("Thor", null) //city can not be null
-	var student = Student("Thor", "Valhalla", false) //student can not be null
+	var student: Student = Student("Thor", "Valhalla", false) //student can not be null
 	var lino: Student? = null //lino can be null
 	println("equals on null object: ${lino == student}") //no null point exception although lino is null
 	println("A student from Zagreb is named ${ list.find { it.isFrom("Zagreb") } ?.name ?: "<none>" }") //possible null point, compiler forces checking  
@@ -64,8 +64,19 @@ fun main(args: Array<String>) {
 	//lambda argument does not need to be final
 	var city = "Split"
 	city = getSomeCity()
-	println("Students from some city: ${ list.filter{ it.isFrom(city) } }")	
+	println("Students from some city: ${ list.filter{ it.isFrom(city) } }")
+	
+	val obj: Any = city //Any is like an Object in JAVA
+	if (obj is String) //smart cast, in the following block, obj is of type String
+		println("Object is a string of length ${obj.length}")
+	
+	for ((i, value) in list.withIndex()) { //iterating list with indexes
+		println("Index ${i}: ${value}")
+	}
 }
+
+tailrec fun findFixPoint(x: Double = 1.0): Double //tail recursion which translate into a loop
+        = if (x == Math.cos(x)) x else findFixPoint(Math.cos(x))
 
 
 fun getSomeCity() = "Zagreb"
