@@ -17,6 +17,7 @@ import org.omnifaces.cdi.ViewScoped;
 import hr.neos.jvmlang.java.Country;
 import hr.neos.jvmlang.java.Employee;
 import hr.neos.jvmlang.java.EmployeeServiceJLocal;
+import hr.neos.jvmlang.kotlin.EmployeeServiceKLocal;
 
 //@ManagedBean
 //@javax.faces.bean.ViewScoped
@@ -28,6 +29,9 @@ public class MultiCultiSelectViewK implements Serializable {
 
 	@EJB
 	private EmployeeServiceJLocal employeeService;
+	
+	@EJB
+	private EmployeeServiceKLocal employeeServiceK;
 	
 	private List<Employee> selectableEmployees;
 	private List<Employee> chosenEmployees;
@@ -52,6 +56,7 @@ public class MultiCultiSelectViewK implements Serializable {
 			}			
 			refreshCountries();
 			initAllEmployees();
+			System.out.println(employeeServiceK.getAllHavingDepartments());
 		} catch (Exception e) {
 			System.err.println(e);
 		}
