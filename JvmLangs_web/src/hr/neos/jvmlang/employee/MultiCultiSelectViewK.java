@@ -30,8 +30,8 @@ public class MultiCultiSelectViewK implements Serializable {
 	@EJB
 	private EmployeeServiceJLocal employeeService;
 	
-	@EJB
-	private EmployeeServiceKLocal employeeServiceK;
+//	@EJB
+//	private EmployeeServiceKLocal employeeServiceK;
 	
 	private List<Employee> selectableEmployees;
 	private List<Employee> chosenEmployees;
@@ -56,7 +56,7 @@ public class MultiCultiSelectViewK implements Serializable {
 			}			
 			refreshCountries();
 			initAllEmployees();
-			System.out.println(employeeServiceK.getAllHavingDepartments());
+//			System.out.println(employeeServiceK.getAllHavingDepartments());
 		} catch (Exception e) {
 			System.err.println(e);
 		}

@@ -11,7 +11,6 @@ data class Student (val name: String, private var _city: String, var artist: Boo
 	
 	//short function
 	fun isFrom(city: String) = _city == city 
-	
 }
 
 fun generateList() = mutableListOf(
