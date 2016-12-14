@@ -25,7 +25,7 @@
  -->
 
 <h:head>
-	<title>MultiCultural Selection</title>
+	<title>MultiCultural Selection [Kotlin]</title>
 </h:head>
  
 <h:body>
@@ -38,11 +38,11 @@
 		<p/>
 		Here is a list of the remaining countries to select from: <br/>		
 		<h:outputText 
-			value="#{multiCultiSelectView.countriesString}"
+			value="#{multiCultiSelectViewK.countriesString}"
 			id="remaining-countries" style="font-weight: bold;"/>
 		<p/>
 		
-		<p:dataTable var="emp" value="#{multiCultiSelectView.selectableEmployees}"
+		<p:dataTable var="emp" value="#{multiCultiSelectViewK.selectableEmployees}"
 			rows="10" paginator="true" rowsPerPageTemplate="5,10,20" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			>
 		    <p:column headerText="First name" >
@@ -60,20 +60,31 @@
         		<h:outputText value="#{emp.department.location.country.countryName}" />
     		</p:column>
     		<p:column headerText="">
-    			<p:commandButton value="Select employee" actionListener="#{multiCultiSelectView.selectEmployee(emp)}"
+    			<p:commandButton value="Select employee" actionListener="#{multiCultiSelectViewK.selectEmployee(emp)}"
     			 	update="@form"/>
     		</p:column>
 		</p:dataTable>
 		
 		<h2>Project members </h2>
-	    <p:dataList value="#{multiCultiSelectView.employees}" var="emp" type="ordered">
+	    <p:dataList value="#{multiCultiSelectViewK.chosenEmployees}" var="emp" type="ordered">
 	        <f:facet name="header">
 	            Selected employees
 	        </f:facet>
 	        #{emp.firstName} #{emp.lastName} (#{emp.department.location.country.countryName})
 	    </p:dataList>
 	    <p:commandButton value="Clear list of selected employees" 
-	    	actionListener="#{multiCultiSelectView.clearEmployees()}" update="@form"/>
+	    	actionListener="#{multiCultiSelectViewK.clearEmployees()}" update="@form"/>
+
+    	<p/>
+    	<p/>
+		<h2>Project leader candidates</h2>
+		<p:dataTable var="emp" value="#{multiCultiSelectViewK.allEmployeesWithCountries}"
+			rows="20" paginator="true" rowsPerPageTemplate="5,10,20" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			>
+		    <p:column headerText="Name (country)" filterMatchMode="contains" filterBy="#{emp}">
+        		<h:outputText value="#{emp}" />
+    		</p:column>
+		</p:dataTable>		    	
 	</h:form>
 </h:body>
 </html>
