@@ -16,7 +16,7 @@ class EmployeeServiceK : EmployeeServiceKLocal {
 	private var em: EntityManager? = null
 	
 	override fun getAllHavingDepartments(): List<Employee> {
-		return em!!.createNamedQuery("Employee.getAllHavingDepartments", Employee::class.java).getResultList()
+		return em!!.createNamedQuery("Employee.getAllHavingDepartments", Employee::class.java ).getResultList()
 	}
 	
 	override val all: List<Employee>?

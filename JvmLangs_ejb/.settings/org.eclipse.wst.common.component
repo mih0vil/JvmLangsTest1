@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="JvmLangs_ejb">
-        <wb-resource deploy-path="/" source-path="/ejbModule" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/" source-path="/domain"/>
+        <wb-resource deploy-path="/" source-path="/src/main/kotlin"/>
+        <wb-resource deploy-path="/" source-path="/src/main/domain"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
         <property name="java-output-path" value="/JvmLangs_ejb/build/classes"/>
         <property name="ClientProject" value="JvmLangs_ejbClient"/>
         <property name="ClientJARURI" value="JvmLangs_ejbClient.jar"/>

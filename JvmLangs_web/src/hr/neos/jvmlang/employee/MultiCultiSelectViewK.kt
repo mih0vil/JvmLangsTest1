@@ -1,4 +1,3 @@
-@file:JvmName("Koko")
 package hr.neos.jvmlang.employee
 
 import javax.inject.Named
@@ -7,7 +6,7 @@ import java.io.Serializable
 
 @Named
 @ViewScoped
-class MultiCultiSelectViewK2 : Serializable {
+open class MultiCultiSelectViewK : Serializable {
 
 	val test = "Testing Kotlin"
 		
