@@ -25,3 +25,13 @@ class EmployeeServiceK : EmployeeServiceKLocal {
 		}
 }
 
+
+
+@Local
+interface EmployeeServiceKLocal {
+	
+	fun getAllHavingDepartments(): MutableList<Employee>
+	
+	val all: List<Employee>
+	
+}
