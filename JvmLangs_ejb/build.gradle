@@ -22,6 +22,7 @@
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: "kotlin"
+apply plugin: 'groovy'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -46,13 +47,18 @@ sourceSets {
 //	}
 //	main.java.srcDirs += 'ejbModule'
 	main.java.srcDirs += 'src/main/domain'
+	main.java.srcDirs += 'src/main/java'
+	main.groovy.srcDirs += 'src/main/java'
+	main.kotlin.srcDirs += 'src/main/kotlin'
 }
 
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-	//kotlin
+	
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	
+	compile 'org.codehaus.groovy:groovy-all:2.4.7'
 	
 	compile 'javax:javaee-api:7.0'
 	

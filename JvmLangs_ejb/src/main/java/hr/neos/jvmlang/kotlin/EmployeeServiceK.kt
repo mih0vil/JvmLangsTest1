@@ -15,11 +15,11 @@ class EmployeeServiceK : EmployeeServiceKLocal {
 	@PersistenceContext
 	private var em: EntityManager? = null
 	
-	override fun getAllHavingDepartments(): List<Employee> {
+	override fun getAllHavingDepartments(): MutableList<Employee> {
 		return em!!.createNamedQuery("Employee.getAllHavingDepartments", Employee::class.java ).getResultList()
 	}
 	
-	override val all: List<Employee>?
+	override val all: List<Employee>
 		get() {
 			return em!!.createNamedQuery("Employee.findAll", Employee::class.java).getResultList()
 		}

@@ -6,8 +6,8 @@ import javax.ejb.Local
 @Local
 interface EmployeeServiceKLocal {
 	
-	fun getAllHavingDepartments(): List<Employee>
+	fun getAllHavingDepartments(): MutableList<Employee>
 	
-	val all: List<Employee>?
+	val all: List<Employee>
 	
 }

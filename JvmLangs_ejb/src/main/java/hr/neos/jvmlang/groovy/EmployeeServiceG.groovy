@@ -1,6 +1,8 @@
 package hr.neos.jvmlang.groovy
 
 import java.util.List
+
+import javax.ejb.EJB
 import javax.ejb.Local
 import javax.ejb.LocalBean
 import javax.ejb.Stateless
@@ -16,7 +18,7 @@ import hr.neos.jvmlang.java.EmployeeServiceJLocal
 public class EmployeeServiceG implements EmployeeServiceGLocal {
 
 	@PersistenceContext
-	EntityManager em
+	private EntityManager em
 	
     @Override
     List<Employee> getAllHavingDepartments() {
@@ -27,6 +29,5 @@ public class EmployeeServiceG implements EmployeeServiceGLocal {
 	public List<Employee> getAll() {
 		em.createNamedQuery("Employee.findAll", Employee.class).getResultList()
 	}
-
 
 }
