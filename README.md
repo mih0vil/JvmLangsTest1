@@ -6,10 +6,11 @@ I wanted to try out some JVM languages other than JAVA. On my working place I ne
 * Groovy
 * Kotlin
 
-**Tools used**:
+**Tools and requirments**:
 * Eclipse Mars.2
 * JDK 1.8
 * Glassfish 1.4
+  * Datasource for HR schema in Oracle database
 
 ## Groovy
 
@@ -53,3 +54,31 @@ Here is my opinion on the development after doing the project:
 * *Autocomplete* of methods does not always generate all available methods in expression even with static type checking enabled. So sometimes you need to go to documentation or you can try to assign the expression to a variable and check the autocomplete of methods for that variable
 * I could not always put static compilation annotation because groovy plugin would produce error and would not be able to compile the class. I am not sure in which cases it works and in which it does not.
 * JSF XHTML document did not have autocomplete for managed bean implemented in groovy. It could be because I could not put static compilation annotation on it due to a bug in groovy plugin.
+
+
+## Kotlin
+
+* Small library size
+* developed by JetBrains
+* popular in Android community which also mostly uses Android Studio developed by JetBrains
+* in their documentation one can see that motivation for a specific langauge design comes from the famouse book *Effective Java*. So the idea was to make Java a little bit **more effective** for a programmer
+  * different null handling. One can define a variable which can not have null assigned and this is forced by the compiler. And if it can be null, it has nice null handling like in groovy.
+  * motivates immutability and closed classes
+  * **high-order functions**, extended collections with popular functional interfaces (like in Groovy and Java 8), tail recursion functions
+    * like in groovy, parameters of the lambda expression do not need to be effectively final (like in Java 8)
+* **string templates**
+* more powerful **switch** statement
+
+Notes on developing in Kotlin:
+* names of the parameters of class constructor where not visible from Java (they are named arg1, arg2, ...)
+* dependency injection kind of a kills some of the goodies in Kotlin
+  * one can not specify non-nullable field because this field is initialised with null and only by dependency injection it gets the required value. There is `lateinit` which did not work for me
+  * managed beans need to be non final classes and their properties and methods need to be non final as well which requires extra keywords in Kotlin. This should be fixed in future versions of Kotlin somehow.
+
+Notes for developing in Kotlin with Eclipse:
+* one needs Kotlin plugin available from Eclipse Marketplaces
+* refactoring is unavailable (change names of the properties and methods)
+* auto-complete for annotations does not work until you import the annotation
+* there is a tool for converting Java to Kotlin (but not the opposite)
+* plugin did not help me to sucessfully deploy EAR project to JEE app server. It did not generate *.class* files but copied .kt (extension for Kotlin) to build directory
+  * therefore I had to make a Gradle project to compile Kotlin files but this required a total build of JAVA, Groovy and Kotlin files as well
