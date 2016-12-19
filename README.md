@@ -82,3 +82,7 @@ Notes for developing in Kotlin with Eclipse:
 * there is a tool for converting Java to Kotlin (but not the opposite)
 * plugin did not help me to sucessfully deploy EAR project to JEE app server. It did not generate *.class* files but copied .kt (extension for Kotlin) to build directory
   * therefore I had to make a Gradle project to compile Kotlin files but this required a total build of JAVA, Groovy and Kotlin files as well
+
+# Conclusion
+
+Kotlin looks very promising but at the moment if you are using Eclipse, you need to set it well with Gradle to enjoy development. It also seems to me that it does not fit Java as good as Groovy does. It would be worth trying Spring Boot with Kotlin but I would then enjoy building it with Kotlin for the majority of the project. I guess that performance of Kotlin should be better then Groovy and maybe better then Java. And of course, it sure works well for Android development as there are many reports on the web which proove that. Groovy fits better for me on JEE and Eclipse. It sure makes code more readable and enjoyable to work on comparing to Java. And if one does not know how to do something the groovy way, one can always write it in Java inside of the Groovy class making it easy to transit to for Java developers.
